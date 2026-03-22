@@ -49,6 +49,15 @@ function toSlug(post: any) {
     .replace(/^posts\//, '')
   return safeDecode(fromPath).replace(/\.md$/, '').normalize('NFKC')
 }
+
+function getDate(post: any) {
+  return post?.date || post?.meta?.date || ''
+}
+
+function getTags(post: any) {
+  const raw = post?.tags || post?.meta?.tags || []
+  return Array.isArray(raw) ? raw : []
+}
 </script>
 
 <template>
@@ -80,8 +89,8 @@ function toSlug(post: any) {
 
           <div class="flex flex-wrap items-center justify-between gap-3">
             <div class="flex flex-wrap items-center gap-2">
-              <UBadge v-if="post.date" variant="soft" color="neutral">{{ post.date }}</UBadge>
-              <UBadge v-for="tag in post.tags || []" :key="`${post.path}:${tag}`" variant="soft" color="primary">#{{ tag }}</UBadge>
+              <UBadge v-if="getDate(post)" variant="soft" color="neutral">{{ getDate(post) }}</UBadge>
+              <UBadge v-for="tag in getTags(post)" :key="`${post.path}:${tag}`" variant="soft" color="primary">#{{ tag }}</UBadge>
             </div>
 
             <UButton :to="'/posts/' + toSlug(post)" variant="soft" size="sm" icon="i-lucide-arrow-up-right">{{ siteCopy.readPostButton }}</UButton>
