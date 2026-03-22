@@ -1,7 +1,8 @@
 ---
 title: "קוד Nuxt"
-description: "סתם פוסט מוזר
-אין צורך להתלהב"
+description: |-
+  סתם פוסט מוזר  
+  וירידת שורה
 date: "2026-03-22"
 tags: ["nuxt"]
 ---
