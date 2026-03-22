@@ -26,3 +26,7 @@ tags: ["nuxt"]
   </UModal>
 </template>
 ```
+
+![image](https://pub-d6658bcd5b3c426ea9fab4a938a548be.r2.dev/posts/2026-03-22/d7f28a0b-4a68-46c3-aaec-b6c7181c5133.png)
+
+לל
