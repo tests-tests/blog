@@ -51,6 +51,12 @@ const { data: post } = await useAsyncData('post:' + slug.value, async () => {
   return all.find((item: any) => normalizeDocSlug(item) === slug.value)
 })
 
+const postDate = computed(() => post.value?.date || post.value?.meta?.date || '')
+const postTags = computed(() => {
+  const raw = post.value?.tags || post.value?.meta?.tags || []
+  return Array.isArray(raw) ? raw : []
+})
+
 if (!post.value) {
   throw createError({ statusCode: 404, statusMessage: 'Post not found' })
 }
@@ -68,8 +74,8 @@ if (!post.value) {
         <h1 class="text-3xl font-semibold">{{ post.title }}</h1>
         <p v-if="post.description" class="text-muted">{{ post.description }}</p>
         <div class="flex flex-wrap items-center gap-2">
-          <UBadge v-if="post.date" variant="soft" color="neutral">{{ post.date }}</UBadge>
-          <UBadge v-for="tag in post.tags || []" :key="tag" variant="soft" color="primary">#{{ tag }}</UBadge>
+          <UBadge v-if="postDate" variant="soft" color="neutral">{{ postDate }}</UBadge>
+          <UBadge v-for="tag in postTags" :key="tag" variant="soft" color="primary">#{{ tag }}</UBadge>
         </div>
       </header>
 
