@@ -1,0 +1,13 @@
+{
+  "uiPrimaryLight": "#4F9CA0",
+  "uiPrimaryDark": "#60a5fa",
+  "uiBgLight": "#F5FFF5",
+  "uiBgDark": "#0f172a",
+  "uiBgMutedLight": "#4B7BAB",
+  "uiBgMutedDark": "#111827",
+  "uiBorderLight": "#A9E7AD",
+  "uiBorderDark": "#1f2937",
+  "uiTextLight": "#2A313B",
+  "uiTextDark": "#e5e7eb",
+  "uiRadius": "0.15rem"
+}
