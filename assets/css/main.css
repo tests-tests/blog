@@ -1,0 +1,16 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+@plugin "@tailwindcss/typography";
+
+:root {
+  --blog-bg: radial-gradient(1200px circle at 10% 0%, #dbeafe55, transparent 50%), #f4f7fb;
+}
+
+.dark {
+  --blog-bg: radial-gradient(1200px circle at 10% 0%, #0b3b6650, transparent 50%), #0b1220;
+}
+
+body {
+  min-block-size: 100vh;
+  background: var(--blog-bg);
+}
