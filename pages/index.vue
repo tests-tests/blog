@@ -19,13 +19,33 @@ function toSlug(stem: string) {
 </script>
 
 <template>
-  <main style="max-width: 780px; margin: 2rem auto; font-family: system-ui; line-height: 1.6; padding: 0 1rem;">
-    <h1>Posts</h1>
+  <UContainer class="py-10">
+    <section class="rounded-2xl border border-default bg-default/70 p-5 backdrop-blur-sm">
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <div class="space-y-1">
+          <p class="text-xs uppercase tracking-[0.2em] text-muted">Blog</p>
+          <h1 class="text-3xl font-semibold">Posts</h1>
+          <p class="text-sm text-muted">Clean, readable and static-ready.</p>
+        </div>
 
-    <ul style="padding-left: 1rem;">
-      <li v-for="post in posts || []" :key="post.path" style="margin-bottom: 0.75rem;">
-        <NuxtLink :to="'/posts/' + toSlug(post.stem)">{{ post.title || post.path }}</NuxtLink>
-      </li>
-    </ul>
-  </main>
+        <UColorModeButton />
+      </div>
+    </section>
+
+    <section class="mt-4 grid gap-4">
+      <UCard v-for="post in posts || []" :key="post.path">
+        <div class="space-y-3">
+          <div class="space-y-1">
+            <h2 class="text-xl font-semibold">{{ post.title || post.path }}</h2>
+            <p v-if="post.description" class="text-sm text-muted">{{ post.description }}</p>
+          </div>
+
+          <div class="flex items-center justify-between">
+            <UBadge v-if="post.date" variant="soft" color="neutral">{{ post.date }}</UBadge>
+            <UButton :to="'/posts/' + toSlug(post.stem)" variant="soft" size="sm" icon="i-lucide-arrow-up-right">Read</UButton>
+          </div>
+        </div>
+      </UCard>
+    </section>
+  </UContainer>
 </template>
