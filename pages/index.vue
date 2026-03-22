@@ -1,5 +1,16 @@
 <script setup lang="ts">
+import siteCopyRaw from '~/content/site-copy.json'
+
 const CONTENT_PREFIX = 'posts'
+const siteCopy = {
+  blogLabel: 'בלוג',
+  blogTitle: 'פוסטים',
+  blogDescription: 'תצוגה נקייה, קריאה וברורה.',
+  readPostButton: 'קריאה',
+  postsListHeading: 'רשימת פוסטים',
+  postsListDescription: 'כל הפוסטים שפורסמו באתר.',
+  ...siteCopyRaw
+}
 
 useHead({
   htmlAttrs: {
@@ -45,13 +56,18 @@ function toSlug(post: any) {
     <section class="rounded-2xl border border-default bg-default/70 p-5 backdrop-blur-sm">
       <div class="flex flex-wrap items-center justify-between gap-3">
         <div class="space-y-1">
-          <p class="text-xs uppercase tracking-[0.2em] text-muted">בלוג</p>
-          <h1 class="text-3xl font-semibold">פוסטים</h1>
-          <p class="text-sm text-muted">תצוגה נקייה, קריאה וברורה.</p>
+          <p class="text-xs uppercase tracking-[0.2em] text-muted">{{ siteCopy.blogLabel }}</p>
+          <h1 class="text-3xl font-semibold">{{ siteCopy.blogTitle }}</h1>
+          <p class="text-sm text-muted">{{ siteCopy.blogDescription }}</p>
         </div>
 
         <UColorModeButton />
       </div>
+    </section>
+
+    <section class="mt-6 space-y-1">
+      <h2 class="text-xl font-semibold">{{ siteCopy.postsListHeading }}</h2>
+      <p class="text-sm text-muted">{{ siteCopy.postsListDescription }}</p>
     </section>
 
     <section class="mt-4 grid gap-4">
@@ -62,9 +78,13 @@ function toSlug(post: any) {
             <p v-if="post.description" class="text-sm text-muted">{{ post.description }}</p>
           </div>
 
-          <div class="flex items-center justify-between">
-            <UBadge v-if="post.date" variant="soft" color="neutral">{{ post.date }}</UBadge>
-            <UButton :to="'/posts/' + toSlug(post)" variant="soft" size="sm" icon="i-lucide-arrow-up-right">קריאה</UButton>
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <div class="flex flex-wrap items-center gap-2">
+              <UBadge v-if="post.date" variant="soft" color="neutral">{{ post.date }}</UBadge>
+              <UBadge v-for="tag in post.tags || []" :key="`${post.path}:${tag}`" variant="soft" color="primary">#{{ tag }}</UBadge>
+            </div>
+
+            <UButton :to="'/posts/' + toSlug(post)" variant="soft" size="sm" icon="i-lucide-arrow-up-right">{{ siteCopy.readPostButton }}</UButton>
           </div>
         </div>
       </UCard>
