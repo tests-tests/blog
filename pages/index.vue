@@ -1,20 +1,39 @@
 <script setup lang="ts">
 const CONTENT_PREFIX = 'posts'
 
+useHead({
+  htmlAttrs: {
+    dir: 'rtl',
+    lang: 'he'
+  }
+})
+
 const { data: posts } = await useAsyncData('posts', async () => {
   return await queryCollection('content').where('extension', '=', 'md').all()
 })
 
-function toSlug(stem: string) {
-  if (!stem) {
+function safeDecode(value: string) {
+  try {
+    return decodeURIComponent(value)
+  } catch {
+    return value
+  }
+}
+
+function toSlug(post: any) {
+  const stem = String(post?.stem || '')
+  const path = String(post?.path || '')
+  if (!stem && !path) {
     return ''
   }
 
-  if (stem.startsWith(CONTENT_PREFIX + '/')) {
-    return stem.slice(CONTENT_PREFIX.length + 1)
+  const fromStem = stem.startsWith(CONTENT_PREFIX + '/') ? stem.slice(CONTENT_PREFIX.length + 1) : stem
+  if (fromStem) {
+    return safeDecode(fromStem).normalize('NFKC')
   }
 
-  return stem
+  const fromPath = path.replace(/^\//, '').replace(/^posts\//, '')
+  return safeDecode(fromPath).replace(/\.md$/, '').normalize('NFKC')
 }
 </script>
 
@@ -23,9 +42,9 @@ function toSlug(stem: string) {
     <section class="rounded-2xl border border-default bg-default/70 p-5 backdrop-blur-sm">
       <div class="flex flex-wrap items-center justify-between gap-3">
         <div class="space-y-1">
-          <p class="text-xs uppercase tracking-[0.2em] text-muted">Blog</p>
-          <h1 class="text-3xl font-semibold">Posts</h1>
-          <p class="text-sm text-muted">Clean, readable and static-ready.</p>
+          <p class="text-xs uppercase tracking-[0.2em] text-muted">בלוג</p>
+          <h1 class="text-3xl font-semibold">פוסטים</h1>
+          <p class="text-sm text-muted">תצוגה נקייה, קריאה וברורה.</p>
         </div>
 
         <UColorModeButton />
@@ -42,7 +61,7 @@ function toSlug(stem: string) {
 
           <div class="flex items-center justify-between">
             <UBadge v-if="post.date" variant="soft" color="neutral">{{ post.date }}</UBadge>
-            <UButton :to="'/posts/' + toSlug(post.stem)" variant="soft" size="sm" icon="i-lucide-arrow-up-right">Read</UButton>
+            <UButton :to="'/posts/' + toSlug(post)" variant="soft" size="sm" icon="i-lucide-arrow-up-right">קריאה</UButton>
           </div>
         </div>
       </UCard>
