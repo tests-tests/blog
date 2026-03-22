@@ -1,6 +1,12 @@
 <script setup lang="ts">
+import siteCopyRaw from '~/content/site-copy.json'
+
 const CONTENT_PREFIX = 'posts'
 const route = useRoute()
+const siteCopy = {
+  backToPostsButton: 'חזרה לפוסטים',
+  ...siteCopyRaw
+}
 
 function normalizeRouteSlug(value: string) {
   const cleaned = value.replace(/^\/+|\/+$/g, '')
@@ -53,11 +59,20 @@ if (!post.value) {
 <template>
   <UContainer class="py-10">
     <div class="mb-4 flex items-center justify-between">
-      <UButton to="/" variant="ghost" icon="i-lucide-arrow-right">חזרה</UButton>
+      <UButton to="/" variant="ghost" icon="i-lucide-arrow-right">{{ siteCopy.backToPostsButton }}</UButton>
       <UColorModeButton />
     </div>
 
     <article class="rounded-2xl border border-default bg-default/70 p-6 shadow-sm backdrop-blur-sm">
+      <header v-if="post" class="mb-6 space-y-2 border-b border-default pb-5">
+        <h1 class="text-3xl font-semibold">{{ post.title }}</h1>
+        <p v-if="post.description" class="text-muted">{{ post.description }}</p>
+        <div class="flex flex-wrap items-center gap-2">
+          <UBadge v-if="post.date" variant="soft" color="neutral">{{ post.date }}</UBadge>
+          <UBadge v-for="tag in post.tags || []" :key="tag" variant="soft" color="primary">#{{ tag }}</UBadge>
+        </div>
+      </header>
+
       <ContentRenderer v-if="post" class="prose prose-neutral dark:prose-invert max-w-none" :value="post" />
     </article>
   </UContainer>
