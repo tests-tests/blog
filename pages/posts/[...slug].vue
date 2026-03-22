@@ -13,8 +13,14 @@ if (!post.value) {
 </script>
 
 <template>
-  <main style="max-width: 780px; margin: 2rem auto; font-family: system-ui; line-height: 1.7; padding: 0 1rem;">
-    <NuxtLink to="/">Back</NuxtLink>
-    <ContentRenderer v-if="post" :value="post" />
-  </main>
+  <UContainer class="py-10">
+    <div class="mb-4 flex items-center justify-between">
+      <UButton to="/" variant="ghost" icon="i-lucide-arrow-left">Back</UButton>
+      <UColorModeButton />
+    </div>
+
+    <article class="rounded-2xl border border-default bg-default/70 p-6 shadow-sm backdrop-blur-sm">
+      <ContentRenderer v-if="post" class="prose prose-neutral dark:prose-invert max-w-none" :value="post" />
+    </article>
+  </UContainer>
 </template>
