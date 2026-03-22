@@ -32,7 +32,10 @@ function toSlug(post: any) {
     return safeDecode(fromStem).normalize('NFKC')
   }
 
-  const fromPath = path.replace(/^\//, '').replace(/^posts\//, '')
+  const fromPath = path
+    .replace(/^\//, '')
+    .replace(/^[^/]+\/posts\//, '')
+    .replace(/^posts\//, '')
   return safeDecode(fromPath).replace(/\.md$/, '').normalize('NFKC')
 }
 </script>
