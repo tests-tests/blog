@@ -1,3 +1,8 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
 @plugin "@tailwindcss/typography";
+
+code, pre {
+  direction: ltr;
+  unicode-bidi: embed;
+}
