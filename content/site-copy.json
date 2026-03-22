@@ -1,11 +1,11 @@
 {
-  "blogLabel": "בלוג",
-  "blogTitle": "פוסטים",
-  "blogDescription": "תצוגה נקייה, קריאה וברורה.",
+  "blogLabel": "מידעים",
+  "blogTitle": "מערכת מידע מהיר",
+  "blogDescription": "מייכיכיכי",
   "adminButton": "ניהול",
   "refreshButton": "רענון",
-  "readPostButton": "קריאה",
-  "backToPostsButton": "חזרה לפוסטים",
-  "postsListHeading": "רשימת פוסטים",
-  "postsListDescription": "כל הפוסטים שפורסמו באתר."
+  "readPostButton": "קרא",
+  "backToPostsButton": "חזור",
+  "postsListHeading": "רשימתתתת",
+  "postsListDescription": "מאמרים"
 }
