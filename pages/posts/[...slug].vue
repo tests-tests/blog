@@ -1,13 +1,36 @@
 <script setup lang="ts">
 const CONTENT_PREFIX = 'posts'
 const route = useRoute()
+
+function normalizeRouteSlug(value: string) {
+  const cleaned = value.replace(/^\/+|\/+$/g, '')
+  try {
+    return decodeURIComponent(cleaned).normalize('NFKC')
+  } catch {
+    return cleaned.normalize('NFKC')
+  }
+}
+
+function normalizeDocSlug(item: any) {
+  const stem = String(item?.stem || '')
+  const path = String(item?.path || '')
+
+  const fromStem = stem.startsWith(CONTENT_PREFIX + '/') ? stem.slice(CONTENT_PREFIX.length + 1) : stem
+  const byStem = fromStem ? fromStem : ''
+
+  const byPath = path
+    .replace(/^\//, '')
+    .replace(/^[^/]+\/posts\//, '')
+    .replace(/^posts\//, '')
+    .replace(/\.md$/, '')
+
+  const candidate = byStem || byPath
+  return normalizeRouteSlug(candidate)
+}
+
 const slug = computed(() => {
   const raw = Array.isArray(route.params.slug) ? route.params.slug.join('/') : String(route.params.slug || '')
-  try {
-    return decodeURIComponent(raw).normalize('NFKC')
-  } catch {
-    return raw.normalize('NFKC')
-  }
+  return normalizeRouteSlug(raw)
 })
 
 useHead({
@@ -19,14 +42,7 @@ useHead({
 
 const { data: post } = await useAsyncData('post:' + slug.value, async () => {
   const all = await queryCollection('content').all()
-  return all.find((item: any) => {
-    const stem = String(item?.stem || '')
-    const path = String(item?.path || '')
-    const normalizedStem = (stem.startsWith(CONTENT_PREFIX + '/') ? stem.slice(CONTENT_PREFIX.length + 1) : stem).normalize('NFKC')
-    const normalizedPath = path.replace(/^\//, '').replace(/^posts\//, '').replace(/\.md$/, '').normalize('NFKC')
-
-    return normalizedStem === slug.value || normalizedPath === slug.value
-  })
+  return all.find((item: any) => normalizeDocSlug(item) === slug.value)
 })
 
 if (!post.value) {
