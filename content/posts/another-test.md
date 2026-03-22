@@ -29,3 +29,5 @@ export default {
 ```
 
 more
+
+![מטוס](https://pub-d6658bcd5b3c426ea9fab4a938a548be.r2.dev/posts/2026-03-22/66232f01-abd1-460b-9d45-f1ab7a658f9c.png "מטוס טס")
