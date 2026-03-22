@@ -1,0 +1,8 @@
+{
+  "name": "pages-bootstrap-site",
+  "private": true,
+  "scripts": {
+    "build": "bun run generate",
+    "generate": "node -e \"const fs=require('fs');fs.mkdirSync('.output/public',{recursive:true});const html='<!doctype html><html><head><meta charset=\\\"utf-8\\\"><meta name=\\\"viewport\\\" content=\\\"width=device-width, initial-scale=1\\\"><title>Pages Bootstrap</title></head><body><main style=\\\"font-family:system-ui;padding:2rem\\\"><h1>Pages bootstrap site</h1><p>This repository now has a minimal static build pipeline.</p><p>Replace this with your real static site project and keep the workflow.</p></main></body></html>';fs.writeFileSync('.output/public/index.html',html);\""
+  }
+}
